@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>贪吃蛇</title>
+</head>
+<body>
+    <canvas id="canvas" width="500" height="500" style="background:#000;margin: 0 auto;display: block;"></canvas>
+</body>
+    <script>
+        window.onload = function() {
+            var cvs = document.getElementById('canvas');
+            var ctx = cvs.getContext('2d');
+            // 屏幕宽高
+            var cvsW = cvs.width;
+            var cvsH = cvs.height;
+            // 贪吃蛇单位宽高
+            var snakeW = 10;
+            var snakeH = 10;
+
+            var snake = []; // 贪食蛇
+            var len = 4; // 贪食蛇的长度
+            // 方向
+            var direction = 'right';
+            
+            // 食物位置
+            var food = {
+                x: Math.round(Math.random() * (cvsW / snakeW - 1)),
+                y: Math.round(Math.random() * (cvsH / snakeH - 1)),
+            }
+            // 初始贪吃蛇位置
+            for(var i = len - 1;i >= 0;i--){
+                snake.push({
+                    snakeX: i,
+                    snakeY: 0
+                });
+            }
+            // 绘制贪吃蛇
+            function drawSnake(x, y){
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(x * snakeW,y * snakeH,snakeW,snakeH);
+
+                ctx.fillStyle = '#000';
+                ctx.strokeRect(x * snakeW,y * snakeH,snakeW,snakeH);
+            }
+            // 绘制食物
+            function drawFood(x, y){
+                ctx.fillStyle = 'yellow';
+                ctx.fillRect(x * snakeW,y * snakeH,snakeW,snakeH);
+
+                ctx.fillStyle = '#000';
+                ctx.strokeRect(x * snakeW,y * snakeH,snakeW,snakeH);
+            }
+            // 绘制分数
+            function drawScore(num){
+                ctx.fillStyle = 'yellow';
+                ctx.font = '14px Arial';
+                ctx.fillText('score : ' + num,5,cvsH-5);
+            }
+            // 改变方向
+            document.onkeydown = function(e){
+                if(e.keyCode == 37 && direction != 'right'){
+                    direction = 'left';
+                }else if(e.keyCode == 38 && direction != 'down'){
+                    direction = 'up';
+                }else if(e.keyCode == 39 && direction != 'left'){
+                    direction = 'right';
+                }else if(e.keyCode == 40 && direction != 'up'){
+                    direction = 'down';
+                }
+            }
+            // 绘制
+            function draw(){
+                ctx.clearRect(0,0,cvsW,cvsH);
+                for(var i = 0;i < snake.length;i++){
+                    drawSnake(snake[i].snakeX,snake[i].snakeY);
+                }
+                drawFood(food.x,food.y);
+                drawScore(len-4);
+                var snakeHeadX = snake[0].snakeX;
+                var snakeHeadY = snake[0].snakeY;
+
+                if(direction == 'right'){
+                    snakeHeadX++;
+                }else if(direction == 'left'){
+                    snakeHeadX--;
+                }else if(direction == 'up'){
+                    snakeHeadY--;
+                }else if(direction == 'down'){
+                    snakeHeadY++;
+                }
+                // 检测是否超出边界  
+                if(snakeHeadX >= cvsW / snakeW || snakeHeadX < 0 || snakeHeadY < 0 || snakeHeadY >= cvsH / snakeH){
+                    location.reload();
+                }
+                // 检测是否撞到自己
+                for(var t = 1;t < snake.length;t++){
+                    if(snakeHeadX == snake[t].snakeX && snakeHeadY == snake[t].snakeY){
+                        location.reload();
+                    }
+                }
+                // 检测是否吃到食物
+                if(snakeHeadX == food.x && snakeHeadY == food.y){
+                    food.x = Math.round(Math.random() * (cvsW / snakeW - 1));
+                    food.y = Math.round(Math.random() * (cvsH / snakeH - 1));
+                    len++;
+                }else{
+                    snake.pop();
+                }
+                snake.unshift({
+                    snakeX: snakeHeadX,
+                    snakeY: snakeHeadY
+                });
+            }
+
+            setInterval(draw, 60);
+
+        }
+    </script>
+</html>
