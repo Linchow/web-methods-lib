@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>考试相关禁用</title>
+</head>
+<body>
+    <script>
+    //为窗口注册失去焦点事件  
+    window.onblur = function() {
+        console.log('窗口失去焦点')
+    }
+      
+    //当关闭窗口时提示是否提交考试  
+    window.onbeforeunload = function()  {  
+        console.log('窗口关闭')
+        return "当前数据还没有保存，关闭、刷新或切换窗口会自动完成考试，是否继续?"; 
+    }  
+    //窗口关闭后给出提示  
+    window.onunload = function()  {   
+        alert("已成功提交考试！");  
+    }  
+      
+    //屏蔽鼠标右键     
+    document.oncontextmenu = function()     
+    {     
+        return false;     
+    }     
+     //屏蔽F1帮助     
+    window.onhelp = function()                       
+    {     
+        return   false;     
+    }     
+     //屏蔽其他功能键  
+    document.onkeydown = function()     
+    {     
+        var   k  =  window.event.keyCode;     
+        if   (k  ==  116)//屏蔽 F5 刷新键                                            
+        {     
+            window.event.keyCode  =  0;     
+            window.event.returnValue =  false;     
+        }     
+        
+        if   (window.event.ctrlKey && k == 82)//Ctrl + R     
+            window.event.returnValue=   false;     
+        if   (window.event.ctrlKey && k == 78)//屏蔽Ctrl+n     
+            window.event.returnValue =  false;     
+        if   (window.event.ctrlKey && k == 87)//屏蔽Ctrl+w     
+            window.event.returnValue =  false;     
+        if   (event.shiftKey && k==121)//屏蔽 shift+F10     
+            window.event.returnValue = false;     
+        if   (window.event.srcElement.tagName == "A" && window.event.shiftKey)       
+            window.event.returnValue  =  false;//屏蔽 shift 加鼠标左键新开一网页     
+        if   (window.event.altKey && k == 115)//屏蔽Alt+F4     
+        {    
+            window.showModelessDialog("about:blank","","dialogWidth:1px;dialogheight:1px");   
+            return  false;     
+        }     
+        if   (window.event.altKey   &&     
+            (k   ==   37   || //屏蔽 Alt+方向键 ←     
+                k   ==   39)) //屏蔽 Alt+ 方向键→     
+        {     
+            alert("不准你使用ALT+方向键前进或后退网页！");     
+            event.returnValue=false;     
+        }        
+    }  
+    </script>
+</body>
+</html>
