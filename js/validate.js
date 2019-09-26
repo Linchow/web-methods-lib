@@ -49,11 +49,11 @@ function validNum(str) {
 }
 
 /**
- * 最多两位小数
+ * 最多两位小数 负数 (-)?
  * @param {String} str 
  */
 function validDecimal(str) {
-    return /^([1-9][0-9]*)+(.[0-9]{1,2})?$/.test(str)
+    return /^(0|[1-9]\d*)($|\.\d{1,2}$)/.test(str)
 }
 
 /**
