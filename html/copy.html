@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>复制</title>
+</head>
+<body>
+  <input type="text" id="iptCopy" value="复制内容" readonly>
+  <button onclick="copy()">复制</button>
+  <script>
+    function copy() {
+      var iptCopy = document.getElementById('iptCopy');
+      if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)){
+        var range = document.createRange();
+        range.selectNode(iptCopy);
+        var selection = window.getSelection();
+        if(selection.rangeCount > 0) selection.removeAllRanges();
+        selection.addRange(range); 
+        var result = document.execCommand('copy');
+        if(result){
+          alert('复制成功');
+        }else{
+          alert('复制失败,请手动复制');
+        }
+        window.getSelection().removeAllRanges();
+      }else{
+        iptCopy.select();
+        var result = document.execCommand('copy', false);
+        if(result){
+          alert('复制成功');
+        }else{
+          alert('复制失败,请手动复制');
+        }
+      }
+    }
+  </script>
+</body>
+</html>
