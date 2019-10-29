@@ -90,7 +90,7 @@ function getUrlParams(name){
  * @param {string} url
  * @returns {Object}
  */
-function getQueryObject(url) {
+function param2Obj(url) {
     url = url == null ? window.location.href : url
     const search = url.substring(url.lastIndexOf('?') + 1)
     const obj = {}
@@ -103,6 +103,27 @@ function getQueryObject(url) {
       return rs
     })
     return obj
+}
+
+/**
+ * 获取地址栏参数
+ * @param {string} url
+ * @returns {Object}
+ */
+function param2Obj(url) {
+    const search = url.split('?')[1]
+    if (!search) {
+        return {}
+    }
+    return JSON.parse(
+        '{"' +
+        decodeURIComponent(search)
+          .replace(/"/g, '\\"')
+          .replace(/&/g, '","')
+          .replace(/=/g, '":"')
+          .replace(/\+/g, ' ') +
+        '"}'
+    )
 }
 
 /**

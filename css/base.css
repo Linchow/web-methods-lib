@@ -50,3 +50,11 @@ table {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+/*多余两行省略号代替*/
+.text-noWarp-2{
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
