@@ -7,9 +7,9 @@
  */
 function setCookie(name, value, iDay){
     var tempStr = name + '=' + value;
+    var expires = '';
     if(iDay) { // 默认过期时间为浏览器关闭
-        var expires = '',
-            oDate = new Date();
+        var oDate = new Date();
         oDate.setDate(oDate.getDate() + iDay);
         expires = ';expires=' + oDate;
     }
@@ -194,4 +194,18 @@ function getElPosition(dom) {
         top: t,
         left: l
     };
+}
+
+/**
+ * 生成uuid
+ */
+function getUUID() {
+    function s4 () {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1)
+    }
+    return (
+        s4() + s4() + '-' + s4() + '-' + s4() +  '-' + s4() + '-' + s4() + s4() + s4()
+    )
 }
