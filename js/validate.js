@@ -37,7 +37,7 @@ function validCard(val) {
  * @param {String} str 
  */
 function validPhone(str) {
-    return /^1[345789]\d{9}$/.test(str)
+    return /^1((3[\d])|(4[5,6,9])|(5[0-3,5-9])|(6[5-7])|(7[0-8])|(8[1-3,5-8])|(9[1,8,9]))\d{8}$/.test(str)
 }
 
 /**
